@@ -1,0 +1,31 @@
+pipeline {
+  agent any
+
+  options {
+    ansiColor('xterm')
+  }
+
+  parameters {
+    string(name: 'ENV', defaultValue: 'prod', description: 'Environment')
+    string(name: 'APPNAME', defaultValue: '', description: 'App Name')
+  }
+
+  stages {
+
+    stage('Get KubeConfig') {
+      steps {
+        sh 'aws eks update-kubeconfig --name ${ENV}-roboshop'
+      }
+    }
+
+    stage('Get App Code') {
+      steps {
+        dir('APP') {
+          git branch: 'main', url: 'https://github.com/Revanthsatyam/${APPNAME}'
+        }
+      }
+    }
+
+  }
+
+}
