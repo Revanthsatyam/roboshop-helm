@@ -23,7 +23,15 @@ pipeline {
         dir('APP') {
           git branch: 'main', url: 'https://github.com/Revanthsatyam/${APPNAME}'
         }
-        sh 'find .'
+        dir('CHART') {
+          git branch: 'main', url: 'https://github.com/Revanthsatyam/roboshop-helm'
+        }
+      }
+    }
+
+    stage('Helm Deploy') {
+      steps {
+        sh 'helm upgrade -i ${APPNAME} ./CHART --debug -f APP/helm/${ENV}.yaml --set APP_VERSION=${APP_VERSION}'
       }
     }
 
