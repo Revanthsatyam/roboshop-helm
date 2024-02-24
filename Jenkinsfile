@@ -23,6 +23,7 @@ pipeline {
         dir('APP') {
           git branch: 'main', url: 'https://github.com/Revanthsatyam/${APPNAME}'
         }
+        sh 'find .'
       }
     }
 
