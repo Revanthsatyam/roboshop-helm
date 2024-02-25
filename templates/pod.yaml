@@ -7,4 +7,4 @@ metadata:
 spec:
   containers:
     - name: {{ .Values.component }}
-      image: 369896808580.dkr.ecr.us-east-1.amazonaws.com/{{ .Values.component }}
+      image: 369896808580.dkr.ecr.us-east-1.amazonaws.com/{{ .Values.component }}:{{ .Values.APP_VERSION }}
