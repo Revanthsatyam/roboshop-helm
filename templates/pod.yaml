@@ -12,3 +12,4 @@ spec:
   initContainers:
     - name: roboshop-aws-ps-init-container
       image: 369896808580.dkr.ecr.us-east-1.amazonaws.com/roboshop-aws-ps-init-container:2.0.2
+      imagePullPolicy: Always
