@@ -13,7 +13,7 @@ spec:
       serviceAccountName: {{ .Values.component }}
       containers:
         - name: schema
-          image: 369896808580.dkr.ecr.us-east-1.amazonaws.com/roboshop-schema-init-cont:2.0.2
+          image: 369896808580.dkr.ecr.us-east-1.amazonaws.com/roboshop-schema-init-cont:2.0.3
           env:
             - name: COMPONENT
               value: {{ .Values.component }}
