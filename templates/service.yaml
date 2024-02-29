@@ -4,6 +4,8 @@ metadata:
   name: {{ .Values.component }}
   labels:
     app.kubernetes.io/name: {{ .Values.component }}
+  annotations:
+    "helm.sh/hook": pre-install
 spec:
   type: {{ .Values.service_type }}
   selector:
