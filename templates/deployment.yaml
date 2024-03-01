@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "roboshop.fullname" . }}
+  name: {{ .Values.component }}
   labels:
     {{- include "roboshop.labels" . | nindent 4 }}
 spec:
@@ -24,7 +24,8 @@ spec:
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      serviceAccountName: {{ include "roboshop.serviceAccountName" . }}
+      serviceAccountName: {{ .Values.component }}
+      enableServiceLinks: false
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
       volumes:
@@ -32,17 +33,17 @@ spec:
           emptyDir:
             sizeLimit: 5Mi
       initContainers:
-        - name: roboshop-aws-ps-init-container
+        - name: roboshop-aws-ps-init-cont
           image: 369896808580.dkr.ecr.us-east-1.amazonaws.com/roboshop-aws-ps-init-container:2.0.3
           env:
             - name: PARAMETERS
-              value: { { .Values.PARAMETERS } }
+              value: {{ .Values.PARAMETERS }}
           imagePullPolicy: Always
           volumeMounts:
             - mountPath: /common
               name: common
       containers:
-        - name: {{ .Chart.Name }}
+        - name: {{ .Values.component }}
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: 369896808580.dkr.ecr.us-east-1.amazonaws.com/{{ .Values.component }}:{{ .Values.APP_VERSION }}
@@ -52,16 +53,16 @@ spec:
               name: common
           ports:
             - name: http
-              containerPort: 80
+              containerPort: {{ .Values.port }}
               protocol: TCP
           livenessProbe:
             httpGet:
-              path: /
-              port: http
+              path: /health
+              port: {{ .Values.port }}
           readinessProbe:
             httpGet:
-              path: /
-              port: http
+              path: /health
+              port: {{ .Values.port }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       {{- with .Values.nodeSelector }}
