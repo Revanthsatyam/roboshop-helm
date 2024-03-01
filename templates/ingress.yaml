@@ -17,9 +17,9 @@ spec:
         paths:
           backend:
             service:
-              name: {{ $fullName }}
+              name: {{ .Values.component }}
               port:
-                number: {{ $svcPort }}
+                number: {{ .Values.port }}
           path: /
           pathType: ImplementationSpecific
 {{- end }}
