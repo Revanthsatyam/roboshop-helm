@@ -5,6 +5,7 @@ metadata:
   labels:
     app.kubernetes.io/name: {{ .Values.component }}
 spec:
+  enableServiceLinks: false
   serviceAccountName: {{ .Values.component }}
   containers:
   - name: {{ .Values.component }}
