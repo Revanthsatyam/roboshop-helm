@@ -12,14 +12,14 @@ metadata:
 spec:
   ingressClassName: nginx
   rules:
-    - host: {{ .Values.recordName }}
-      http:
-        paths:
-          backend:
-            service:
-              name: {{ .Values.component }}
-              port:
-                number: {{ .Values.port }}
-          path: /
-          pathType: ImplementationSpecific
+  - host: {{ .Values.recordName }}
+    http:
+      paths:
+      - backend:
+          service:
+            name: {{ .Values.component }}
+            port:
+              number: {{ .Values.port }}
+        path: /
+        pathType: ImplementationSpecific
 {{- end }}
