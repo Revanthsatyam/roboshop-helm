@@ -28,9 +28,9 @@ spec:
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
       volumes:
-      - name: common
-        emptyDir:
-          sizeLimit: 5Mi
+        - name: common
+          emptyDir:
+            sizeLimit: 5Mi
       initContainers:
         - name: roboshop-aws-ps-init-container
           image: 369896808580.dkr.ecr.us-east-1.amazonaws.com/roboshop-aws-ps-init-container:2.0.3
@@ -39,8 +39,8 @@ spec:
               value: { { .Values.PARAMETERS } }
           imagePullPolicy: Always
           volumeMounts:
-          - mountPath: /common
-            name: common
+            - mountPath: /common
+              name: common
       containers:
         - name: {{ .Chart.Name }}
           securityContext:
@@ -48,8 +48,8 @@ spec:
           image: 369896808580.dkr.ecr.us-east-1.amazonaws.com/{{ .Values.component }}:{{ .Values.APP_VERSION }}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           volumeMounts:
-          - mountPath: /common
-            name: common
+            - mountPath: /common
+              name: common
           ports:
             - name: http
               containerPort: 80
