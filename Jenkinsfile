@@ -21,10 +21,10 @@ pipeline {
     stage ('Get App Code') {
       steps {
         dir('APP') {
-          git branch: 'main', url: 'https://github.com/raghudevopsb74/${APPNAME}'
+          git branch: 'main', url: 'https://github.com/Revanthsatyam/${APPNAME}'
         }
         dir('CHART') {
-          git branch: 'main', url: 'https://github.com/raghudevopsb74/roboshop-helm'
+          git branch: 'main', url: 'https://github.com/Revanthsatyam/roboshop-helm'
         }
       }
     }
