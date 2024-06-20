@@ -1,7 +1,7 @@
 pipeline {
   agent any
 
-  option {
+  options {
     ansiColor('xterm')
   }
 
