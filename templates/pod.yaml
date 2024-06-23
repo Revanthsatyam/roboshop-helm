@@ -6,8 +6,8 @@ metadata:
     app.kubernetes.io/name: {{ .Values.component }}
 spec:
   containers:
-    - name: {{ .Values.component }}
-      image: 590183653013.dkr.ecr.us-east-1.amazonaws.com/{{ .Values.component }}:{{ .Values.APP_VERSION }}
+  - name: {{ .Values.component }}
+    image: 590183653013.dkr.ecr.us-east-1.amazonaws.com/{{ .Values.component }}:{{ .Values.APP_VERSION }}
   initContainers:
-    - name: roboshop-aws-ps-init-cont
-      image: 590183653013.dkr.ecr.us-east-1.amazonaws.com/roboshop-aws-ps-init-cont:2.0.0
+  - name: roboshop-aws-ps-init-cont
+    image: 590183653013.dkr.ecr.us-east-1.amazonaws.com/roboshop-aws-ps-init-cont:2.0.0
