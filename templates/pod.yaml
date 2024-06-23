@@ -10,8 +10,8 @@ spec:
   - name: {{ .Values.component }}
     image: 590183653013.dkr.ecr.us-east-1.amazonaws.com/{{ .Values.component }}:{{ .Values.APP_VERSION }}
     volumeMounts:
-      - name: common
-        mountPath: /common
+      - mountPath: /common
+        name: common
   initContainers:
   - name: roboshop-aws-ps-init-cont
     image: 590183653013.dkr.ecr.us-east-1.amazonaws.com/roboshop-aws-ps-init-cont:2.0.4
@@ -19,8 +19,8 @@ spec:
       - name: PARAMETERS
         value: {{ .Values.PARAMETERS }}
     volumeMounts:
-      - name: common
-        mountPath: /common
+      - mountPath: /common
+        name: common
   volumes:
   - name: common
     emptyDir:
