@@ -9,7 +9,7 @@ spec:
       serviceAccountName: {{ .Values.component }}
       containers:
       - name: schema
-        image: 633788536644.dkr.ecr.us-east-1.amazonaws.com/roboshop-schema-init-cont:2.0.4
+        image: 590183653013.dkr.ecr.us-east-1.amazonaws.com/roboshop-schema-init-cont:2.0.1
         env:
           - name: COMPONENT
             value: {{ .Values.component }}
