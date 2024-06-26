@@ -4,7 +4,7 @@ kind: Job
 metadata:
   name: {{ .Values.component }}
   labels:
-    {{ - include "roboshop.labels" . | nindent 4 }}
+  {{ - include "roboshop.labels" . | nindent 4 }}
   annotations:
     "helm.sh/hook": pre-install
 spec:
@@ -24,3 +24,4 @@ spec:
       restartPolicy: Never
   backoffLimit: 4
 {{- end }}
+
