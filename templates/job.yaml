@@ -3,6 +3,8 @@ apiVersion: batch/v1
 kind: Job
 metadata:
   name: {{ .Values.component }}
+  labels:
+    {{- include "roboshop.labels" . | nindent 4 }}
   annotations:
     "helm.sh/hook": pre-install
 spec:
