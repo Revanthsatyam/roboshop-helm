@@ -1,78 +1,78 @@
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: {{ .Values.component }}
-  labels:
-    {{- include "roboshop.labels" . | nindent 4 }}
-spec:
-  {{- if not .Values.autoscaling.enabled }}
-  replicas: {{ .Values.replicaCount }}
-  {{- end }}
-  selector:
-    matchLabels:
-      {{- include "roboshop.selectorLabels" . | nindent 6 }}
-  template:
-    metadata:
-      {{- with .Values.podAnnotations }}
-      annotations:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
-      labels:
-        {{- include "roboshop.selectorLabels" . | nindent 8 }}
-    spec:
-      {{- with .Values.imagePullSecrets }}
-      imagePullSecrets:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
-      serviceAccountName: {{ .Values.component }}
-      securityContext:
-        {{- toYaml .Values.podSecurityContext | nindent 8 }}
-      volumes:
-      - name: common
-        emptyDir:
-          sizeLimit: 5Mi
-      initContainers:
-        - name: roboshop-aws-ps-init-cont
-          image: 590183653013.dkr.ecr.us-east-1.amazonaws.com/roboshop-aws-ps-init-cont:2.0.4
-          env:
-            - name: PARAMETERS
-              value: {{ .Values.PARAMETERS }}
-          imagePullPolicy: Always
-          volumeMounts:
-          - mountPath: /common
-            name: common
-      containers:
-        - name: {{ .Chart.Name }}
-          securityContext:
-            {{- toYaml .Values.securityContext | nindent 12 }}
-          image: 590183653013.dkr.ecr.us-east-1.amazonaws.com/{{ .Values.component }}:{{ .Values.APP_VERSION }}
-          imagePullPolicy: {{ .Values.image.pullPolicy }}
-          volumeMounts:
-          - mountPath: /common
-            name: common
-          ports:
-            - name: http
-              containerPort: {{ .Values.port }}
-              protocol: TCP
-          livenessProbe:
-            httpGet:
-              path: /health
-              port: {{ .Values.port }}
-          readinessProbe:
-            httpGet:
-              path: /health
-              port: {{ .Values.port }}
-          resources:
-            {{- toYaml .Values.resources | nindent 12 }}
-      {{- with .Values.nodeSelector }}
-      nodeSelector:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
-      {{- with .Values.affinity }}
-      affinity:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
-      {{- with .Values.tolerations }}
-      tolerations:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
+#apiVersion: apps/v1
+#kind: Deployment
+#metadata:
+#  name: {{ .Values.component }}
+#  labels:
+#    {{- include "roboshop.labels" . | nindent 4 }}
+#spec:
+#  {{- if not .Values.autoscaling.enabled }}
+#  replicas: {{ .Values.replicaCount }}
+#  {{- end }}
+#  selector:
+#    matchLabels:
+#      {{- include "roboshop.selectorLabels" . | nindent 6 }}
+#  template:
+#    metadata:
+#      {{- with .Values.podAnnotations }}
+#      annotations:
+#        {{- toYaml . | nindent 8 }}
+#      {{- end }}
+#      labels:
+#        {{- include "roboshop.selectorLabels" . | nindent 8 }}
+#    spec:
+#      {{- with .Values.imagePullSecrets }}
+#      imagePullSecrets:
+#        {{- toYaml . | nindent 8 }}
+#      {{- end }}
+#      serviceAccountName: {{ .Values.component }}
+#      securityContext:
+#        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+#      volumes:
+#      - name: common
+#        emptyDir:
+#          sizeLimit: 5Mi
+#      initContainers:
+#        - name: roboshop-aws-ps-init-cont
+#          image: 590183653013.dkr.ecr.us-east-1.amazonaws.com/roboshop-aws-ps-init-cont:2.0.4
+#          env:
+#            - name: PARAMETERS
+#              value: {{ .Values.PARAMETERS }}
+#          imagePullPolicy: Always
+#          volumeMounts:
+#          - mountPath: /common
+#            name: common
+#      containers:
+#        - name: {{ .Chart.Name }}
+#          securityContext:
+#            {{- toYaml .Values.securityContext | nindent 12 }}
+#          image: 590183653013.dkr.ecr.us-east-1.amazonaws.com/{{ .Values.component }}:{{ .Values.APP_VERSION }}
+#          imagePullPolicy: {{ .Values.image.pullPolicy }}
+#          volumeMounts:
+#          - mountPath: /common
+#            name: common
+#          ports:
+#            - name: http
+#              containerPort: {{ .Values.port }}
+#              protocol: TCP
+#          livenessProbe:
+#            httpGet:
+#              path: /health
+#              port: {{ .Values.port }}
+#          readinessProbe:
+#            httpGet:
+#              path: /health
+#              port: {{ .Values.port }}
+#          resources:
+#            {{- toYaml .Values.resources | nindent 12 }}
+#      {{- with .Values.nodeSelector }}
+#      nodeSelector:
+#        {{- toYaml . | nindent 8 }}
+#      {{- end }}
+#      {{- with .Values.affinity }}
+#      affinity:
+#        {{- toYaml . | nindent 8 }}
+#      {{- end }}
+#      {{- with .Values.tolerations }}
+#      tolerations:
+#        {{- toYaml . | nindent 8 }}
+#      {{- end }}
