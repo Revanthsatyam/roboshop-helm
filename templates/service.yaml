@@ -3,13 +3,11 @@ kind: Service
 metadata:
   name: {{ .Values.component }}
   labels:
-    {{- include "roboshop.labels" . | nindent 4 }}
+    app.kubernetes.io/name: {{ .Values.component }}
 spec:
-  type: {{ .Values.service.type }}
-  ports:
-    - port: {{ .Values.service.port }}
-      targetPort: http
-      protocol: TCP
-      name: http
+  type: {{ .Values.service_type }}
   selector:
-    {{- include "roboshop.selectorLabels" . | nindent 4 }}
+    app.kubernetes.io/name: {{ .Values.component }}
+  ports:
+    - port: 80
+      targetPort: {{ .Values.port }}
