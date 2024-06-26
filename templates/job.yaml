@@ -12,15 +12,15 @@ spec:
     spec:
       serviceAccountName: {{ .Values.component }}
       containers:
-      - name: schema
-        image: 590183653013.dkr.ecr.us-east-1.amazonaws.com/roboshop-schema-init-cont:2.0.1
-        env:
-          - name: COMPONENT
-            value: {{ .Values.component }}
-          - name: ENV
-            value: {{ .Values.env }}
-          - name: DB_TYPE
-            value: {{ .Values.schema.DB_TYPE }}
+        - name: schema
+          image: 590183653013.dkr.ecr.us-east-1.amazonaws.com/roboshop-schema-init-cont:2.0.1
+          env:
+            - name: COMPONENT
+              value: {{ .Values.component }}
+            - name: ENV
+              value: {{ .Values.env }}
+            - name: DB_TYPE
+              value: {{ .Values.schema.DB_TYPE }}
       restartPolicy: Never
   backoffLimit: 4
 {{- end }}
