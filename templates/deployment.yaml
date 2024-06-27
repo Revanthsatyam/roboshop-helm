@@ -42,7 +42,7 @@ spec:
           - mountPath: /common
             name: common
       containers:
-        - name: {{ .Chart.Name }}
+        - name: {{ .Values.component }}
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: 590183653013.dkr.ecr.us-east-1.amazonaws.com/{{ .Values.component }}:{{ .Values.APP_VERSION }}
